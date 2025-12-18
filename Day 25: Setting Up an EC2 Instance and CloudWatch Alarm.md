@@ -29,15 +29,16 @@ _**AWS Docs to be followed**: [Create a CloudWatch alarm for an instance](https:
   <img width="1299" height="129" alt="image" src="https://github.com/user-attachments/assets/89779b3d-3505-48bf-a5ee-6014efa4bd27" />
 
 - For `Alarm action`, choose whether to specify an action to take when the alarm is triggered. Choose an action from the list.
-- For `Alarm thresholds`, select the metric and criteria for the alarm. For example, to create an alarm that is triggered when CPU utilization reaches 80% for a 5 minute period, do the following:
+- For `Alarm thresholds`, select the metric and criteria for the alarm. For example, to create an alarm that is triggered when CPU utilization reaches 90% for a 5 minute period, do the following:
 
   - Keep the default setting for `Group samples by (Average)` and `Type of data to sample (CPU utilization)`.
 
-  - Choose >= for `Alarm when` and enter `0.90` for Percent.
+  - Choose >= for `Alarm when` and enter `90` for Percent.
 
   - Enter 1 for `Consecutive period` and select `5 minutes` for `Period`.
 
-  <img width="1299" height="434" alt="image" src="https://github.com/user-attachments/assets/1894aee6-d566-47b0-a6c7-a5eaf3963231" />
+  <img width="1299" height="435" alt="image" src="https://github.com/user-attachments/assets/2e16b842-1487-40b9-9676-4d70ce03b2d9" />
+
 
 - (Optional) For Sample metric data, choose `Add to dashboard`.
 - Choose `Create`.

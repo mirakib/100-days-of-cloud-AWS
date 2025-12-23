@@ -68,6 +68,10 @@ The Nautilus DevOps team has been tasked with demonstrating the use of VPC Peeri
 
     <img width="820" height="322" alt="image" src="https://github.com/user-attachments/assets/471b9b97-2426-429c-b9b8-7c4c5cef37d1" />
 
+11. For DNS resolution, Go to VPC Peering, Seclect the peering connection, and select `Actions > Edit DNS settings` and allow both.
+
+    <img width="1315" height="266" alt="image" src="https://github.com/user-attachments/assets/aab8fa96-e5a5-4564-8cc9-3b5ff0246372" />
+
 11. Update the route tables for both VPCs to enable communication between them. For more information, see Update your route tables for a VPC peering connection.
 
     **Point each others CIDR to peering connection `xfusion-vpc-peering`**
@@ -80,6 +84,34 @@ The Nautilus DevOps team has been tasked with demonstrating the use of VPC Peeri
 
     <img width="1074" height="175" alt="image" src="https://github.com/user-attachments/assets/5801c88d-87ae-4033-95fc-75958617e4f5" />
 
-12. Change `Security Group` for `xfusion-private-ec2` and add inbound rule for `ICMP` to default vpc's CIDR as source.
+12. Change `Security Group` for `xfusion-public-ec2` and add inbound rule for `ICMP` to **private** vpc's CIDR as source.
+
+    <img width="1315" height="389" alt="image" src="https://github.com/user-attachments/assets/339202a1-3ebd-4d83-956f-7f09ceec3aeb" />
+
+12. Change `Security Group` for `xfusion-private-ec2` and add inbound rule for `ICMP` to **public** vpc's CIDR as source.
 
     <img width="1332" height="318" alt="image" src="https://github.com/user-attachments/assets/f93e7b04-96f5-490a-aac8-c011baed7064" />
+
+## Enable SSH access from aws client to `xfusion-public-ec2`
+
+1. Change security group of `xfusion-public-ec2` and add inbound rule for `SSH` from `Anywhre IPv4`.
+
+   <img width="1074" height="201" alt="image" src="https://github.com/user-attachments/assets/b203937b-602b-438d-99c5-176b32f1bf56" />
+
+2. Now connect to `xfusion-public-ec2` from `EC2 instance connect` using AWS management console.
+
+3. Add **aws client** public key `id_rsa.pub` to `xfusion-public-ec2`s `authorized_keys`.
+4. Verify you can ssh into `xfusion-public-ec2`.
+
+   ```bash
+   ssh ec2-user@<public-ip-of-xfusion-public-ec2>
+   ```
+
+## Verify you can ping to private instance using private ip from public instance.
+
+1. ping from public instance to private instance using private ip
+
+   <img width="584" height="204" alt="image" src="https://github.com/user-attachments/assets/cc259fd1-d736-4dd4-9692-5e99ec302e30" />
+
+
+

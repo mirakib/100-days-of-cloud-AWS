@@ -147,7 +147,7 @@ Create a service named `nautilus-service` on the `nautilus-cluster` to run the t
 5. Choose default vpc and subnets of choice and leave other options as default.
 6. Click `Create`
 
-## Task 4: verification application access
+## Task 6: verification application access
 
 1. CLick on the service and make sure the `Status` is `Active` with 1 running task under `Service overview` tab.
 

@@ -146,8 +146,25 @@ Create a service named `nautilus-service` on the `nautilus-cluster` to run the t
 
 5. Choose default vpc and subnets of choice and leave other options as default.
 6. Click `Create`
-7. CLick on the service and make sure the `Status` is `Active` with 1 running task under `Service overview` tab.
+
+## Task 4: verification application access
+
+1. CLick on the service and make sure the `Status` is `Active` with 1 running task under `Service overview` tab.
 
    <img width="1018" height="114" alt="image" src="https://github.com/user-attachments/assets/9ed56a7f-7d5c-42e5-98c3-482f47ecebb5" />
 
-   
+2. Go to VPC Dashboard and change `default` security group with an `HTTP` inbound rule for `0.0.0.0/0`.
+
+   <img width="1315" height="265" alt="image" src="https://github.com/user-attachments/assets/bf1060ea-b986-434e-9b6a-df7ad7f4afa7" />
+
+3. Now from ECS Dashboard `Clusters > nautilus-cluster > Services > nautilus-service > Tasks`.
+
+   <img width="1329" height="285" alt="image" src="https://github.com/user-attachments/assets/82648c4e-d752-4d38-8815-65dc74518d86" />
+
+4. Click on the running task shown. Enter the public IP address to a browser from `Configuration` pane.
+
+   <img width="1018" height="261" alt="image" src="https://github.com/user-attachments/assets/4505481c-8841-41b0-a19c-56432b3d42ef" />
+
+5. In the browser, you see `Welcome to KKE AWS cloud labs!` text in a web page.
+
+   <img width="845" height="168" alt="image" src="https://github.com/user-attachments/assets/ebbb7fa3-5fc2-415f-955d-82301010be35" />

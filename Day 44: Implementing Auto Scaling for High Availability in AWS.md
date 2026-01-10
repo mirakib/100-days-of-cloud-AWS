@@ -71,11 +71,11 @@ Create two security groups under default VPC.
 7. Next in the `Advance details` section, add following script in `User data` section.
 
    ```sh
-    #!/bin/bash
-    yum update -y
-    yum install nginx -y
-    systemctl start nginx
-    systemctl enable nginx
+   #!/bin/bash
+   dnf update -y
+   dnf install nginx -y
+   systemctl start nginx
+   systemctl enable nginx
    ```
 
 8. Click `Create launch template`.
@@ -164,23 +164,30 @@ Create two security groups under default VPC.
 
    <img width="1013" height="428" alt="image" src="https://github.com/user-attachments/assets/cf30b1d9-cb72-47a5-b57f-410b9e1e7240" />
 
-7. Ensures a minimum of `1` instance, desired capacity is `1` instance and a maximum of `2` instances are running based on CPU utilization. Set the target CPU utilization to `50%`.
+6. Enable health check by clicking `Turn on Elastic Load Balancer health check`.
+
+   <img width="1013" height="443" src="https://github.com/user-attachments/assets/aecdc3e2-165f-4098-924b-3b69b0573a87" />
+
+8. Ensures a minimum of `1` instance, desired capacity is `1` instance and a maximum of `2` instances are running based on CPU utilization. Set the target CPU utilization to `50%`.
 
    <img width="1013" height="230" alt="image" src="https://github.com/user-attachments/assets/8ad60356-d471-4ccb-91cf-6a581dcd9c34" />
    <img width="1013" height="187" alt="image" src="https://github.com/user-attachments/assets/75136a7d-cefd-4097-85f5-052263789f58" />
    <img width="1013" height="474" alt="image" src="https://github.com/user-attachments/assets/1afa0472-10fe-497f-9eeb-cf8dd8e9a4cc" />
    <img width="1013" height="274" alt="image" src="https://github.com/user-attachments/assets/b3915a35-5b74-47e1-b596-b2098645b92d" />
 
-8. Leave rest of the settings as default and click `Create auto scalling group`.
+9. Leave rest of the settings as default and click `Create auto scalling group`.
 
 
 ## Task 6: Access application via web
 
 1. Go to load balancer dashboard and select `xfusion-alb`.
 
-   <img width="1088" height="293" alt="image" src="https://github.com/user-attachments/assets/cc8abe24-679a-46af-9a2a-fd2e3e9856e7" />
+   <img width="1132" height="368" alt="image" src="https://github.com/user-attachments/assets/d6641c27-2d8a-4902-9e19-96838af36a9d" />
 
-2. Enter `xfusion-alb` DNS name to a browser and you should see nginx welcome page.
+2. Enter `xfusion-alb` DNS name to a browser and you should see nginx default page.
+
+   <img width="1366" height="303" alt="image" src="https://github.com/user-attachments/assets/964d8609-7683-419e-8a99-5b379817f474" />
+
 
    
 

@@ -20,7 +20,7 @@ Your task is to:
 
 
 
-## Task 1: Create a new VPC named datacenter-pub-vpc.
+## Task 1: Create a new VPC named `datacenter-pub-vpc`.
 
 1. Go to VPC dashboard and click `Create VPC`.
 
@@ -31,7 +31,7 @@ Your task is to:
    <img width="1123" height="354" alt="image" src="https://github.com/user-attachments/assets/5c13e3a3-fce3-4815-b0e1-a8e80a1a8416" />
 
 
-## Task 2: Create a subnet named datacenter-pub-subnet.
+## Task 2: Create a subnet named `datacenter-pub-subnet`.
 
 1. From VPC dashboard, select `Subnets` and click `Create subnet`.
 
@@ -69,7 +69,7 @@ Your task is to:
    <img width="1149" height="304" alt="image" src="https://github.com/user-attachments/assets/1669c667-93da-4165-8878-42dfce3e6f0e" />
 
 
-## Task 4: Create a route table named datacenter-pub-rt
+## Task 4: Create a route table named `datacenter-pub-rt`
 
 1. From VPC navigation pane, select `Route table` and click `Create route table`.
 
@@ -117,7 +117,7 @@ Your task is to:
 
    `SSH (22) >> datacenter-priv-vpc CIDR`
 
-## Task 6: Create an IAM role named datacenter-s3-role
+## Task 6: Create an IAM role named `datacenter-s3-role`
 
 1. From IAM dashboard, select `Roles`.
 
@@ -209,8 +209,15 @@ Your task is to:
 1. SSH into `datacenter-priv-ec2` from aws-client host using it's private ip.
 
    ```sh
+   ssh -i /root/.ssh/datacenter-key.pem ubuntu@<PUBLIC_EC2_PUBLIC_IP>
    ```
 
+2. SSH from PUBLIC EC2 → PRIVATE EC2
+
+   ```sh
+   ssh ubuntu@<PRIVATE_EC2_PRIVATE_IP>
+   ```
+   
 2. Set cronjob on `datacenter-priv-ec2`:
 
    ```sh
@@ -221,9 +228,8 @@ Your task is to:
    */5 * * * * scp -i /root/.ssh/datacenter-key.pem /var/log/boots.log ubuntu@<PUBLIC_EC2_PRIVATE_IP>:/tmp/boots.
    ```
 
-3. Set cronjob on `datacenter-priv-ec2`:
 
-4. Set cronjob on `datacenter-pub-ec2`:
+3. Set cronjob on `datacenter-pub-ec2`:
 
    ```sh
    crontab -e

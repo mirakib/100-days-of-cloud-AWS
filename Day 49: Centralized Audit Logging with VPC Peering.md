@@ -158,6 +158,8 @@ Your task is to:
 
    <img width="1366" height="495" alt="image" src="https://github.com/user-attachments/assets/55d42c0b-4a0b-4c12-9d60-f8771c9746c1" />
 
+8. Attach role to `datacenter-pub-ec2`, from `Action` > `Security` > `Modify IAM role` and select `datacenter-s3-role`.
+
 
 ## Task 7: Create S3 Bucket
 
@@ -204,37 +206,75 @@ Your task is to:
    <img width="1108" height="452" alt="image" src="https://github.com/user-attachments/assets/342d8f96-5702-443d-a435-27686f289af5" />
 
 
-## Task 10: Private EC2 → Public EC2 Log Transfer
+## Task 10: Setup cronjobs in each instance
 
-1. SSH into `datacenter-priv-ec2` from aws-client host using it's private ip.
-
-   ```sh
-   ssh -i /root/.ssh/datacenter-key.pem ubuntu@<PUBLIC_EC2_PUBLIC_IP>
-   ```
-
-2. SSH from PUBLIC EC2 → PRIVATE EC2
+1. SSH into `datacenter-pub-ec2` from `aws-client` host using it's public ip.
 
    ```sh
-   ssh ubuntu@<PRIVATE_EC2_PRIVATE_IP>
+   ssh -i .ssh/datacenter-key.pem ubuntu@<datacenter-pub-ec2-public-ip>
    ```
    
-2. Set cronjob on `datacenter-priv-ec2`:
+2. SSH into private instance from `aws-client` host and enable SSH access to public instance.
 
    ```sh
-   crontab -e
+   ssh ubuntu@<datacenter-priv-ec2-priv-ip> -J ubuntu@<datacenter-pub-ec2-pub-ip>
+   ```
+
+   **Now create RSA keys in `datacenter-priv-ec2`.**
+
+   ```sh
+   ssh-keygen -t rsa
+   ```
+
+   **Copy the public key `id_rsa.pub` to `datacenter-pub-ec2`'s `authorized_keys` and try ssh into `datacenter-pub-ec2` using it's private ip from private instance.**
+
+   **Set cronjob in `datacenter-priv-ec2`.**
+
+   ```sh
+   * * * * * scp /var/log/boots.log ubuntu@10.20.1.53:~/boot/boots.log
+   ```
+
+3. **Set cronjob in `datacenter-pub-ec2`.**
+
+   **Install aws cli first:**
+
+   ```sh
+   sudo apt install unzip
+   ```
+   
+   ```sh
+   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
    ```
 
    ```sh
-   */5 * * * * scp -i /root/.ssh/datacenter-key.pem /var/log/boots.log ubuntu@<PUBLIC_EC2_PRIVATE_IP>:/tmp/boots.
+   sudo unzip awscliv2.zip
+   sudo ./aws/install
    ```
 
+   **Create new access key for `kk_lab_user_xxxx` in IAM:**
 
-3. Set cronjob on `datacenter-pub-ec2`:
+   <img width="1018" height="211" alt="image" src="https://github.com/user-attachments/assets/878dccd1-799d-4a43-a32f-dcab4e681635" />
+   
+   **Set aws credential:**
+   
+   ```sh
+   aws configure
+   ```
+
+   - **Enter the following details**:
+
+     - **AWS Access Key ID**: Enter the Access Key ID from the previous step.
+     - **AWS Secret Access Key**: Enter the Secret Access Key from the previous step.
+     - **Default region name**: Enter the AWS region you want to use (e.g., us-west-1).
+     - **Default output format**: Enter the output format (e.g., json, text, or table).
+
+
+   **Set cronjob in `datacenter-pub-ec2`.**
 
    ```sh
-   crontab -e
+   * * * * * aws s3 cp ~/boot/boots.log s3://datacenter-s3-logs-20551/datacenter-priv-vpc/boot/boots.log
    ```
-
-   ```sh
-   */5 * * * * aws s3 cp /tmp/boots.log s3://datacenter-s3-logs-18009/datacenter-priv-vpc/boot/boots.log
-   ```
+   
+   **Wait for some minutes and check S3 bucket:**
+   
+   <img width="1018" height="297" alt="image" src="https://github.com/user-attachments/assets/451a2d89-46e4-43f1-8b9e-228b58799202" />
